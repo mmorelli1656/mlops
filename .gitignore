@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Pytest
+.pytest_cache/
+
+# Conda / env
+*.egg-info/
+
+# Data (opzionale, se non vuoi versionare i dati con Git)
+# data/
