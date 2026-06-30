@@ -1,0 +1,30 @@
+name: CD
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout codice
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Genera nuovo tag
+        id: tag
+        uses: anothrNick/github-tag-action@1.71.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: patch
+
+      - name: Simula deploy
+        run: |
+          echo "Deploy effettuato per la versione ${{ steps.tag.outputs.new_tag }}"
+          echo "Timestamp: $(date)" > build_info.txt
+          echo "Versione: ${{ steps.tag.outputs.new_tag }}" >> build_info.txt
+          cat build_info.txt
